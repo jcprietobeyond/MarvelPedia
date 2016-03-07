@@ -20,7 +20,11 @@
         <activity
             android:name=".DescripcionActivity"
             android:label="@string/title_activity_descripcion"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <provider
+            android:authorities="beyond.es.marvelpedia"
+            android:name=".contentProvider.dao.MyContentProvider"
+            android:exported="true"/>
     </application>
 
 </manifest>
