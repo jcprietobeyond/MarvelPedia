@@ -11,7 +11,7 @@ import java.util.List;
 
 import beyond.es.marvelpedia.DescripcionActivity;
 import beyond.es.marvelpedia.R;
-import beyond.es.marvelpedia.model.Personaje;
+import beyond.es.marvelpedia.dto.model.Personaje;
 import beyond.es.marvelpedia.viewHolder.PersonajeHolder;
 
 /**

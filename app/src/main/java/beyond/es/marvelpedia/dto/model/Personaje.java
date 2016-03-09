@@ -1,4 +1,4 @@
-package beyond.es.marvelpedia.model;
+package beyond.es.marvelpedia.dto.model;
 
 /**
  * Created by BEYONDPC34 on 02/12/2015.
@@ -8,6 +8,7 @@ public class Personaje {
     private String descripcion;
     private String URLImagen;
     private String URLLogo;
+    private Integer id;
 
     public Personaje(String nombre, String descripcion) {
         this.nombre = nombre;
@@ -48,5 +49,13 @@ public class Personaje {
 
     public String getURLLogo() {
         return URLLogo;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
     }
 }

@@ -4,9 +4,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Adapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,10 +18,11 @@ import java.net.URL;
 import java.util.List;
 
 import beyond.es.marvelpedia.adapter.PersonajeAdapter;
-import beyond.es.marvelpedia.dao.PersonajeDAO;
 import beyond.es.marvelpedia.json.converter.JsonPersonajeConverter;
 import beyond.es.marvelpedia.json.model.CharacterDataWrapper;
-import beyond.es.marvelpedia.model.Personaje;
+import beyond.es.marvelpedia.dto.model.Personaje;
+import beyond.es.marvelpedia.modelo.DaoMaster;
+import beyond.es.marvelpedia.modelo.DaoSession;
 
 /**
  * Created by BEYONDPC34 on 03/12/2015.
@@ -86,7 +84,18 @@ public class MarvelJsonTask extends AsyncTask<Void, Void, CharacterDataWrapper> 
         super.onPostExecute(characterDataWrapper);
         if (recyclerView != null) {
             List<Personaje> listado = JsonPersonajeConverter.getList(characterDataWrapper);
-            PersonajeDAO.save(listado);
+            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(recyclerView.getContext(), "marvelPediaBD", null);
+            DaoMaster master = new DaoMaster(helper.getWritableDatabase());
+            DaoSession sesion = master.newSession();
+            for (Personaje personaje : listado) {
+                beyond.es.marvelpedia.modelo.Personaje personajeBBDD = new beyond.es.marvelpedia.modelo.Personaje();
+                personajeBBDD.setId(personaje.getId());
+                personajeBBDD.setNombre(personaje.getNombre());
+                personajeBBDD.setDescripcion(personaje.getDescripcion());
+                personajeBBDD.setURLImagen(personaje.getURLImagen());
+                personajeBBDD.setURLLogo(personaje.getURLLogo());
+                sesion.insert(personajeBBDD);
+            }
             recyclerView.setAdapter(new PersonajeAdapter(listado));
         }
     }

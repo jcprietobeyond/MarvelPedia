@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import beyond.es.marvelpedia.R;
-import beyond.es.marvelpedia.model.Personaje;
+import beyond.es.marvelpedia.dto.model.Personaje;
 
 /**
  * Created by BEYONDPC34 on 02/12/2015.

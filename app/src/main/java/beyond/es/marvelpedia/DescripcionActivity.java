@@ -1,17 +1,14 @@
 package beyond.es.marvelpedia;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-import beyond.es.marvelpedia.dao.PersonajeDAO;
-import beyond.es.marvelpedia.model.Personaje;
+import beyond.es.marvelpedia.modelo.DaoMaster;
+import beyond.es.marvelpedia.modelo.DaoSession;
+import beyond.es.marvelpedia.modelo.Personaje;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -27,8 +24,11 @@ public class DescripcionActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         int posicion = getIntent().getExtras().getInt("posicion");
-        Personaje personaje = PersonajeDAO.getById(posicion);
-        Picasso.with(getApplicationContext()).load(personaje.getURLImagen()).into(imagenPersonaje);
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), "marvelPediaBD", null);
+        DaoMaster master = new DaoMaster(helper.getWritableDatabase());
+        DaoSession sesion = master.newSession();
+        Personaje personajeBBDD = sesion.getPersonajeDao().load(Long.valueOf(posicion));
+        Picasso.with(getApplicationContext()).load(personajeBBDD.getURLImagen()).into(imagenPersonaje);
     }
 
 }
